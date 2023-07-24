@@ -1,9 +1,24 @@
 import { List, Typography } from '@mui/material'
 import { useTypedSelector } from '../store/hooks/useTypedSelector'
 import Todo from './Todo'
+import { ITodo } from '../store/todoSlice'
 
 const TodoList: React.FC = (): JSX.Element => {
-  const { todos } = useTypedSelector((store) => store.todos)
+  const todos = useTypedSelector((store) => {
+    if (store.tags.filters.length > 0) {
+      const result: ITodo[] = []
+
+      store.todos.todos.forEach((todo) => {
+        store.tags.filters.forEach((filter) => {
+          if (todo.todoText.includes(filter)) {
+            result.push(todo)
+          }
+        })
+      })
+      return result
+    }
+    return store.todos.todos
+  })
 
   return (
     <>

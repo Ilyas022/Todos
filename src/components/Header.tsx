@@ -22,11 +22,11 @@ const Header: React.FC = (): JSX.Element => {
   }
 
   const handlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const tags = e.currentTarget.value
+    const tagsInString = e.currentTarget.value
       .split(' ')
       .filter((word) => word.startsWith('#') && word.length > 1)
-    if (tags.length > 0) {
-      addTag(tags)
+    if (tagsInString.length > 0) {
+      addTag(tagsInString)
     }
     setTodoText(e.currentTarget.value)
   }
@@ -39,11 +39,9 @@ const Header: React.FC = (): JSX.Element => {
       <Box
         sx={{
           display: 'flex',
-          // bgcolor: '#9966FF',
           justifyContent: 'space-between',
           mb: 2,
           px: '20px',
-          // boxShadow: 3,
         }}
       >
         <TextField

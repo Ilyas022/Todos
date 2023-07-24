@@ -8,7 +8,6 @@ export interface ITodo {
 
 interface IinitialState {
   todos: ITodo[]
-  tags: string[]
 }
 
 const initialState: IinitialState = {
@@ -16,12 +15,12 @@ const initialState: IinitialState = {
     {
       id: 1,
       isDone: true,
-      todoText: 'Hello world',
+      todoText: 'Hello to world',
     },
     {
       id: 2,
       isDone: false,
-      todoText: 'Go to shop',
+      todoText: 'Go to #shop',
     },
     {
       id: 3,
@@ -29,7 +28,6 @@ const initialState: IinitialState = {
       todoText: 'Walk with dog',
     },
   ],
-  tags: ['#привет', '#дом'],
 }
 
 const todoSlice = createSlice({

@@ -2,10 +2,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface IinitialState {
   tags: string[]
+  filters: string[]
 }
 
 const initialState: IinitialState = {
-  tags: ['#привет', '#дом'],
+  tags: ['#shop'],
+  filters: [],
 }
 
 const todosSlice = createSlice({
@@ -31,6 +33,14 @@ const todosSlice = createSlice({
       if (state.tags.includes(action.payload)) {
         state.tags = state.tags.filter((tag) => tag !== action.payload)
       }
+    },
+    addFilter: (state, action: PayloadAction<string>) => {
+      if (!state.filters.includes(action.payload)) {
+        state.filters.push(action.payload)
+      }
+    },
+    removeFilter: (state, action: PayloadAction<string>) => {
+      state.filters = state.filters.filter((filter) => filter !== action.payload)
     },
   },
 })
