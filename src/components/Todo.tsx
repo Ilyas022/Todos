@@ -28,16 +28,18 @@ const Todo: React.FC<ITodo> = React.memo(({ id, text, isDone }: ITodo): JSX.Elem
   const handleKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && todoText.trim().length !== 0) {
       setEditing(false)
+
       updateTodoText({ id, text: todoText })
     }
   }
 
   const handleClick = () => {
     if (!isEditing) {
-      setEditing((prev) => !prev)
+      return setEditing((prev) => !prev)
     }
     if (todoText.trim().length !== 0 && isEditing) {
       setEditing(false)
+
       updateTodoText({ id, text: todoText })
     }
   }
