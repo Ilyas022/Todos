@@ -1,24 +1,17 @@
 import { List, Typography } from '@mui/material'
 import { useTypedSelector } from '../store/hooks/useTypedSelector'
 import Todo from './Todo'
-import { ITodo } from '../store/todoSlice'
 
 const TodoList: React.FC = (): JSX.Element => {
-  const todos = useTypedSelector((store) => {
-    if (store.tags.filters.length > 0) {
-      const result: ITodo[] = []
+  const todos = useTypedSelector((store) => store.todos.todos)
 
-      store.todos.todos.forEach((todo) => {
-        store.tags.filters.forEach((filter) => {
-          if (todo.todoText.includes(filter)) {
-            result.push(todo)
-          }
-        })
-      })
-      return result
-    }
-    return store.todos.todos
-  })
+  const filters = useTypedSelector((state) => state.tags.filters)
+
+  const todoList = filters.length
+    ? todos.filter((todo) =>
+      filters.every((filter) => todo.todoText.toLowerCase().includes(filter.toLowerCase()))
+    )
+    : todos
 
   return (
     <>
@@ -48,7 +41,7 @@ const TodoList: React.FC = (): JSX.Element => {
           },
         }}
       >
-        {todos.map((todo) => (
+        {todoList.map((todo) => (
           <Todo key={todo.id} id={todo.id} text={todo.todoText} isDone={todo.isDone} />
         ))}
       </List>

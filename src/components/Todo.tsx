@@ -23,10 +23,13 @@ interface ITodo {
 const Todo: React.FC<ITodo> = React.memo(({ id, text, isDone }: ITodo): JSX.Element => {
   const [todoText, setTodoText] = useState<string>(text)
   const [isEditing, setEditing] = useState<boolean>(false)
-  const { updateTodoState, removeTodo, addTag } = useActions()
+  const { updateTodoState, updateTodoText, removeTodo, addTag } = useActions()
 
   const handleKeydown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' && todoText.trim().length !== 0) setEditing(false)
+    if (e.key === 'Enter' && todoText.trim().length !== 0) {
+      setEditing(false)
+      updateTodoText({ id, text: todoText })
+    }
   }
 
   const handleClick = () => {
@@ -35,6 +38,7 @@ const Todo: React.FC<ITodo> = React.memo(({ id, text, isDone }: ITodo): JSX.Elem
     }
     if (todoText.trim().length !== 0 && isEditing) {
       setEditing(false)
+      updateTodoText({ id, text: todoText })
     }
   }
 
@@ -74,7 +78,13 @@ const Todo: React.FC<ITodo> = React.memo(({ id, text, isDone }: ITodo): JSX.Elem
           onChange={(e) => handleChange(e)}
         />
       ) : (
-        <ListItemButton role={undefined} onClick={() => updateTodoState(id)} dense>
+        <ListItemButton
+          role={undefined}
+          onClick={() => {
+            updateTodoState(id)
+          }}
+          dense
+        >
           <ListItemIcon>
             <Checkbox edge="start" checked={isDone} disableRipple />
           </ListItemIcon>
