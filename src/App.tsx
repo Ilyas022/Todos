@@ -4,6 +4,7 @@ import Header from './components/Header'
 import TagList from './components/TagList'
 
 const App: React.FC = (): JSX.Element => {
+  const a: any = 1
   return (
     <Box
       sx={{
