@@ -1,21 +1,22 @@
-name: developer-pipelines
+name: GitHub Actions Demo
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 jobs:
-  check-lint:
+  init:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-varsion: [ 17.x ]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-
-      - name: Install dependencies from cache
-        run: yarn install
-
-      - name: Run lint
-        run: yarn lint
+      - uses: actions/checkout@v3
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: yarn
+      - name: lint code
+        run: npm run lint
